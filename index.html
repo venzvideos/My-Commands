@@ -44,6 +44,7 @@
         .container {
             width: 100%;
             max-width: 780px;
+            transition: opacity 0.25s ease, transform 0.25s ease;
         }
 
         header {
@@ -87,6 +88,30 @@
             color: var(--text-bold);
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 12px;
+        }
+
+        /* Interactive Clickable Header Variant for Flutter Card */
+        .clickable-header {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color 0.2s ease;
+        }
+        .clickable-header:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+        }
+        .info-hint-badge {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--neon-purple);
+            border: 1px solid var(--neon-purple);
+            padding: 2px 8px;
+            border-radius: 4px;
+            box-shadow: 0 0 6px rgba(211, 0, 255, 0.2);
         }
 
         .cmd-container-box {
@@ -164,6 +189,73 @@
             text-shadow: 0 0 4px #ffffff;
         }
 
+        /* Dedicated Offline Description Overlay View Panel */
+        .description-panel {
+            display: none;
+            width: 100%;
+            max-width: 780px;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 32px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            transition: opacity 0.25s ease;
+        }
+
+        .panel-back-btn {
+            background-color: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: 800;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+        }
+
+        .panel-back-btn:hover {
+            color: #000000;
+            background-color: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        .info-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-bold);
+            margin-top: 0;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .info-body {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        .info-body p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .info-highlight {
+            color: var(--neon-cyan);
+            font-family: var(--font-mono);
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+        }
+
         .notification-toast {
             position: fixed;
             bottom: 30px;
@@ -193,7 +285,8 @@
 </head>
 <body>
 
-<div class="container">
+<!-- VIEW CONTAINER 1: Main Framework Listings Grid -->
+<div id="mainDashboardView" class="container">
     <header>
         <div class="author-tag">Created by Vince Amigo</div>
         <h1>Command Accessor</h1>
@@ -210,53 +303,10 @@
 
     <!-- [SECTION: FLUTTER] -->
     <div class="section-card">
-        <div class="section-header">FLUTTER</div>
+        <div class="section-header clickable-header" onclick="openDescriptionPanel()">
+            <span>FLUTTER</span>
+            <span class="info-hint-badge">View Info</span>
+        </div>
         <div class="cmd-container-box">
             <div class="cmd-string">cd C:\Users\user\Documents\flutter_file\vince_proj</div>
             <button class="action-copy-btn" onclick="executeCopy(this, 'cd C:\\Users\\user\\Documents\\flutter_file\\vince_proj')">Copy</button>
-        </div>
-        <div class="cmd-container-box">
-            <div class="cmd-string">flutter run</div>
-            <button class="action-copy-btn" onclick="executeCopy(this, 'flutter run')">Copy</button>
-        </div>
-    </div>
-
-    <!-- [SECTION: JSX / REACT] -->
-    <div class="section-card">
-        <div class="section-header">JSX / REACT</div>
-        <div class="cmd-container-box">
-            <div class="cmd-string">npm start</div>
-            <button class="action-copy-btn" onclick="executeCopy(this, 'npm start')">Copy</button>
-        </div>
-        <div class="cmd-container-box">
-            <div class="cmd-string">npm run build</div>
-            <button class="action-copy-btn" onclick="executeCopy(this, 'npm run build')">Copy</button>
-        </div>
-    </div>
-</div>
-
-<div id="toastNotification" class="notification-toast">SYSTEM COMMAND PIPED TO CLIPBOARD</div>
-
-<script>
-    function executeCopy(buttonElement, rawText) {
-        navigator.clipboard.writeText(rawText).then(() => {
-            const initialLabel = buttonElement.innerText;
-            buttonElement.innerText = 'Copied';
-            buttonElement.classList.add('success-state');
-            
-            const toast = document.getElementById('toastNotification');
-            toast.classList.add('active-state');
-
-            setTimeout(() => {
-                buttonElement.innerText = initialLabel;
-                buttonElement.classList.remove('success-state');
-                toast.classList.remove('active-state');
-            }, 1800);
-        }).catch(err => {
-            console.error('Clipboard execution error: ', err);
-        });
-    }
-</script>
-
-</body>
-</html>
