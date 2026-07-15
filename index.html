@@ -9,13 +9,21 @@
         canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
         .credits { text-align: center; color: #00ff00; font-size: 1rem; letter-spacing: 1px; margin-bottom: 5px; opacity: 0.8; text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
         h1 { text-align: center; color: #00ff00; text-shadow: 0 0 10px #00ff00; margin-top: 0; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
-        .section { background: rgba(0, 5, 0, 0.85); padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #00ff00; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
-        .section-title { font-size: 1.4rem; font-weight: bold; margin-top: 0; margin-bottom: 15px; color: #fff; text-shadow: 0 0 5px #00ff00; display: flex; align-items: center; gap: 10px; }
-        .cmd-box { background: rgba(0, 0, 0, 0.9); padding: 12px 15px; border-radius: 6px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #005500; }
+        
+        /* Main Container Boxes - Dark & Aesthetic */
+        .section { background: #000000; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); }
+        .section-title { font-size: 1.4rem; font-weight: bold; margin-top: 0; margin-bottom: 20px; color: #fff; text-shadow: 0 0 5px #00ff00; display: flex; align-items: center; gap: 10px; }
+        
+        /* Command Rows - Pure Jet Black */
+        .cmd-box { background: #050505; padding: 15px 20px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #003300; transition: border 0.3s ease; }
+        .cmd-box:hover { border-color: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.1); }
+        
         code { color: #33ff33; font-size: 1rem; font-weight: bold; text-shadow: 0 0 2px rgba(0, 255, 0, 0.5); }
-        button { background: #002200; color: #00ff00; border: 1px solid #00ff00; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-family: inherit; font-size: 0.85rem; font-weight: bold; transition: all 0.2s; box-shadow: 0 0 5px rgba(0, 255, 0, 0.3); }
-        button:hover { background: #00ff00; color: #000; box-shadow: 0 0 10px #00ff00; }
-        button.copied { background: #ffffff; border-color: #ffffff; color: #000000; box-shadow: 0 0 10px #ffffff; }
+        
+        /* Aesthetic Buttons */
+        button { background: #000000; color: #00ff00; border: 1px solid #00ff00; padding: 8px 16px; cursor: pointer; border-radius: 6px; font-family: inherit; font-size: 0.85rem; font-weight: bold; transition: all 0.2s; box-shadow: 0 0 5px rgba(0, 255, 0, 0.2); }
+        button:hover { background: #00ff00; color: #000; box-shadow: 0 0 12px #00ff00; transform: scale(1.03); }
+        button.copied { background: #ffffff; border-color: #ffffff; color: #000000; box-shadow: 0 0 15px #ffffff; }
     </style>
 </head>
 <body>
@@ -27,7 +35,7 @@
 
     <!-- DART SECTION -->
     <div class="section">
-        <div class="section-title">🎯 [SECTION: DART]</div>
+        <div class="section-title"> [SECTION: DART]</div>
         
         <div class="cmd-box">
             <code id="dart1">dart run bin/main.dart</code>
@@ -42,7 +50,7 @@
 
     <!-- FLUTTER SECTION -->
     <div class="section">
-        <div class="section-title">💙 [SECTION: FLUTTER]</div>
+        <div class="section-title"> [SECTION: FLUTTER]</div>
         
         <div class="cmd-box">
             <code id="flut_cd">cd C:\Users\user\Documents\flutter_file\vince_proj</code>
