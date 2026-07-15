@@ -31,6 +31,7 @@
             width: 450px;
             text-align: center;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            display: block; /* Toggled by JS */
         }
 
         /* 3. Restricted Header & Icon Styling */
@@ -74,7 +75,7 @@
             height: 20px;
             margin-bottom: 15px;
             font-weight: bold;
-            visibility: hidden; /* Hidden by default, toggled via JS */
+            visibility: hidden;
         }
 
         /* 6. Authenticate Action Button */
@@ -97,7 +98,53 @@
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
         }
 
-        /* 7. Bottom Footnote Layout */
+        /* 7. The Command Line Dashboard System */
+        .terminal-dashboard {
+            display: none; /* Hidden until passkey is correct */
+            width: 80vw;
+            height: 80vh;
+            background-color: #050505;
+            border: 2px solid #00FF00;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.15);
+            flex-direction: column;
+        }
+        .terminal-history {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            padding-right: 10px;
+        }
+        .terminal-input-row {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #222222;
+            padding-top: 10px;
+        }
+        .terminal-prompt {
+            color: #00FF00;
+            font-weight: bold;
+            margin-right: 10px;
+            user-select: none;
+        }
+        .cmd-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #00FF00;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        /* Scrollbar styles for dashboard */
+        .terminal-history::-webkit-scrollbar { width: 6px; }
+        .terminal-history::-webkit-scrollbar-thumb { background: #00FF00; border-radius: 3px; }
+
         .credits {
             margin-top: 40px;
             font-size: 0.75rem;
@@ -108,14 +155,11 @@
 </head>
 <body>
 
-    <!-- Main Interface Terminal Screen Container -->
-    <div class="login-screen">
-        
-        <!-- Security Header Information -->
+    <!-- SECTION 1: Login Screen Box -->
+    <div id="login-box" class="login-screen">
         <div class="lock-icon">🔐</div>
         <div class="login-title">ACCESS RESTRICTED</div>
         
-        <!-- Interactive Passkey Entry Components -->
         <input 
             type="password" 
             id="passkey" 
@@ -123,51 +167,83 @@
             placeholder="•••" 
             maxlength="3"
             onkeypress="handleKeyPress(event)"
+            autocomplete="current-password"
         >
         
-        <!-- Live System Validation Warnings -->
         <div id="error-msg" class="error-msg">INVALID PASSKEY. ACCESS DENIED.</div>
-        
-        <!-- Manual Submission Interface Button -->
         <button class="btn-authenticate" onclick="validatePasskey()">Authenticate</button>
-        
-        <!-- Author Asset Sign-off Tag -->
         <div class="credits">Created by Simon Amadeus</div>
     </div>
 
-    <!-- JavaScript Interactive Authentication Layer -->
+    <!-- SECTION 2: Interactive Commands Terminal Dashboard -->
+    <div id="dashboard-box" class="terminal-dashboard">
+        <div id="history" class="terminal-history">MATRIX COMMAND VAULT v1.0.0
+Type "help" to see available terminal logs and subroutines.
+
+</div>
+        <div class="terminal-input-row">
+            <span class="terminal-prompt">simon@vault:~$</span>
+            <input type="text" id="cmd" class="cmd-input" placeholder="Enter command..." onkeypress="handleCommandPress(event)" autofocus>
+        </div>
+    </div>
+
+    <!-- JavaScript Core Processing Layer -->
     <script>
-        // Updated system password
         const CORRECT_PASSKEY = "123";
 
-        // Listen for the "Enter" keyboard button mapping action
+        // Handle login field entry
         function handleKeyPress(event) {
             if (event.key === "Enter") {
                 validatePasskey();
             }
         }
 
-        // Central processing engine for passkey string inspection
+        // Validate the passkey structure
         function validatePasskey() {
             const inputField = document.getElementById("passkey");
             const errorDisplay = document.getElementById("error-msg");
             
-            // Extract the user value string
-            const userInput = inputField.value;
-
-            if (userInput === CORRECT_PASSKEY) {
-                // SUCCESS LOGIC PATHWAY
-                errorDisplay.style.visibility = "hidden";
-                alert("ACCESS GRANTED. Opening the Matrix Command Vault...");
-                
-                // Optional Project Destination: Place redirection target here if required
-                // window.location.href = "vault-dashboard.html";
-                
+            if (inputField.value === CORRECT_PASSKEY) {
+                // Hide Auth interface & Unveil Custom Panel
+                document.getElementById("login-box").style.display = "none";
+                document.getElementById("dashboard-box").style.display = "flex";
+                document.getElementById("cmd").focus();
             } else {
-                // FAILURE LOGIC PATHWAY
                 errorDisplay.style.visibility = "visible";
-                inputField.value = ""; // Empty string sequence input clear
-                inputField.focus();    // Reset interface typing anchor state
+                inputField.value = "";
+                inputField.focus();
+            }
+        }
+
+        // Handle command console logic
+        function handleCommandPress(event) {
+            if (event.key === "Enter") {
+                const cmdInput = document.getElementById("cmd");
+                const history = document.getElementById("history");
+                const rawCommand = cmdInput.value.trim();
+                const command = rawCommand.toLowerCase();
+
+                if (rawCommand === "") return;
+
+                // Log user entry to view
+                history.innerText += `simon@vault:~$ ${rawCommand}\n`;
+
+                // Custom Command Processing Matrix
+                if (command === "help") {
+                    history.innerText += `Available Subroutines:\n - help    : View command listings\n - status  : Inspect mainframe system levels\n - clear   : Clean screen history matrix\n - system  : Output author asset verification tags\n\n`;
+                } else if (command === "status") {
+                    history.innerText += `SYSTEM LEVEL: SECURE\nFirewall: ACTIVE\nVault Decryption status: 100%\n\n`;
+                } else if (command === "system") {
+                    history.innerText += `System Core Core: Simon Amadeus Architecture\nEngine Interface Build: HTML5 / CSS3 / ES6 Engine\n\n`;
+                } else if (command === "clear") {
+                    history.innerText = "";
+                } else {
+                    history.innerText += `Error: Unknown system routing command "${rawCommand}". Type "help" for a list of system hooks.\n\n`;
+                }
+
+                // Autoscroll terminal wrapper to base layout anchor
+                cmdInput.value = "";
+                history.scrollTop = history.scrollHeight;
             }
         }
     </script>
