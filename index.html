@@ -111,9 +111,8 @@
             font-family: var(--font-mono);
             font-size: 14px;
             color: var(--text-main);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: pre-wrap;
+            word-break: break-all;
         }
 
         .action-copy-btn {
@@ -184,14 +183,10 @@
             <span></span> [SECTION: DART]
         </div>
         
+        <!-- Combined Dart Commands Box -->
         <div class="cmd-container-box">
-            <div class="cmd-string">dart run bin/main.dart</div>
-            <button class="action-copy-btn" onclick="executeCopy(this, 'dart run bin/main.dart')">Copy</button>
-        </div>
-        
-        <div class="cmd-container-box">
-            <div class="cmd-string">dart format .</div>
-            <button class="action-copy-btn" onclick="executeCopy(this, 'dart format .')">Copy</button>
+            <div class="cmd-string">dart run bin/main.dart && dart format .</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'dart run bin/main.dart && dart format .')">Copy</button>
         </div>
     </div>
 
