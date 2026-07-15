@@ -6,147 +6,167 @@
     <title>System Command Vault</title>
     <style>
         :root {
-            --bg-color: #f8f9fa;
-            --container-bg: #ffffff;
-            --border-color: #e9ecef;
-            --text-primary: #212529;
-            --text-muted: #6c757d;
-            --accent-blue: #0d6efd;
-            --accent-blue-hover: #0b5ed7;
-            --code-bg: #f1f3f5;
-            --code-text: #d63384;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+            --bg-dark: #0d1117;
+            --panel-bg: #161b22;
+            --box-bg: #21262d;
+            --border-color: #30363d;
+            --border-hover: #8b949e;
+            --text-main: #c9d1d9;
+            --text-bold: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-blue: #58a6ff;
+            --accent-blue-bg: rgba(88, 166, 255, 0.1);
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
+            font-family: var(--font-sans);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             margin: 0;
             padding: 40px 20px;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .container {
             width: 100%;
-            max-width: 750px;
+            max-width: 780px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
         }
 
         .author-tag {
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             color: var(--text-muted);
-            margin-bottom: 6px;
-            font-weight: 700;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         h1 {
-            font-size: 28px;
-            font-weight: 800;
+            font-size: 32px;
+            font-weight: 700;
             margin: 0;
-            color: var(--text-primary);
+            color: var(--text-bold);
             letter-spacing: -0.5px;
         }
 
-        .section-block {
-            background-color: var(--container-bg);
+        .section-card {
+            background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 24px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
-        .section-title {
-            font-size: 15px;
+        .section-header {
+            font-size: 14px;
             font-weight: 700;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin: 0 0 18px 0;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--text-primary);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 8px;
+            gap: 10px;
+            color: var(--text-bold);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
         }
 
-        .cmd-row {
+        .cmd-container-box {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: var(--code-bg);
+            background-color: var(--box-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 12px;
-            gap: 15px;
+            padding: 14px 20px;
+            margin-bottom: 14px;
+            gap: 20px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .cmd-row:last-child {
+        .cmd-container-box:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .cmd-container-box:last-child {
             margin-bottom: 0;
         }
 
-        .cmd-text {
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        .cmd-string {
+            font-family: var(--font-mono);
             font-size: 14px;
-            color: var(--text-primary);
+            color: var(--text-main);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .copy-btn {
-            background-color: var(--container-bg);
-            border: 1px solid #ced4da;
-            color: var(--text-muted);
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 600;
+        .action-copy-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: 700;
             border-radius: 6px;
             cursor: pointer;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.15s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             flex-shrink: 0;
         }
 
-        .copy-btn:hover {
+        .action-copy-btn:hover {
             border-color: var(--accent-blue);
             color: var(--accent-blue);
-            background-color: rgba(13, 110, 253, 0.04);
+            background-color: var(--accent-blue-bg);
         }
 
-        .copy-btn.copied {
+        .action-copy-btn.success-state {
             background-color: var(--accent-blue);
             border-color: var(--accent-blue);
-            color: #ffffff;
+            color: var(--bg-dark);
         }
 
-        /* Toast notification style */
-        .toast {
+        /* Centered minimal toast popup */
+        .notification-toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #212529;
-            color: #fff;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background-color: #24292f;
+            color: #f0f6fc;
+            border: 1px solid #484f58;
             padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: none;
-            animation: fadeIn 0.2s ease-out;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.2s ease, opacity 0.2s ease, visibility 0.2s;
+            z-index: 1000;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .notification-toast.active-state {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
@@ -159,62 +179,63 @@
     </header>
 
     <!-- [SECTION: DART] -->
-    <div class="section-block">
-        <div class="section-title">
-            <span>🎯</span> [Section: Dart]
+    <div class="section-card">
+        <div class="section-header">
+            <span>🎯</span> [SECTION: DART]
         </div>
         
-        <div class="cmd-row">
-            <div class="cmd-text">dart run bin/main.dart</div>
-            <button class="copy-btn" onclick="copyCommand(this, 'dart run bin/main.dart')">Copy</button>
+        <div class="cmd-container-box">
+            <div class="cmd-string">dart run bin/main.dart</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'dart run bin/main.dart')">Copy</button>
         </div>
         
-        <div class="cmd-row">
-            <div class="cmd-text">dart format .</div>
-            <button class="copy-btn" onclick="copyCommand(this, 'dart format .')">Copy</button>
+        <div class="cmd-container-box">
+            <div class="cmd-string">dart format .</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'dart format .')">Copy</button>
         </div>
     </div>
 
     <!-- [SECTION: FLUTTER] -->
-    <div class="section-block">
-        <div class="section-title">
-            <span>💙</span> [Section: Flutter]
+    <div class="section-card">
+        <div class="section-header">
+            <span>💙</span> [SECTION: FLUTTER]
         </div>
         
-        <div class="cmd-row">
-            <div class="cmd-text">cd C:\Users\user\Documents\flutter_file\vince_proj</div>
-            <button class="copy-btn" onclick="copyCommand(this, 'cd C:\\Users\\user\\Documents\\flutter_file\\vince_proj')">Copy</button>
+        <div class="cmd-container-box">
+            <div class="cmd-string">cd C:\Users\user\Documents\flutter_file\vince_proj</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'cd C:\\Users\\user\\Documents\\flutter_file\\vince_proj')">Copy</button>
         </div>
         
-        <div class="cmd-row">
-            <div class="cmd-text">flutter run</div>
-            <button class="copy-btn" onclick="copyCommand(this, 'flutter run')">Copy</button>
+        <div class="cmd-container-box">
+            <div class="cmd-string">flutter run</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'flutter run')">Copy</button>
         </div>
     </div>
 </div>
 
-<!-- Toast element for copy confirmation -->
-<div id="toast" class="toast">Command copied to clipboard!</div>
+<!-- Center-bottom floating notification toast -->
+<div id="toastNotification" class="notification-toast">Copied command string to clipboard</div>
 
 <script>
-    function copyCommand(button, text) {
-        navigator.clipboard.writeText(text).then(() => {
-            // Visual feedback on the button
-            const originalText = button.innerText;
-            button.innerText = 'Copied';
-            button.classList.add('copied');
+    function executeCopy(buttonElement, rawText) {
+        navigator.clipboard.writeText(rawText).then(() => {
+            // Instantly transition the target button to its success state
+            const initialLabel = buttonElement.innerText;
+            buttonElement.innerText = 'Copied';
+            buttonElement.classList.add('success-state');
             
-            // Show toast notification
-            const toast = document.getElementById('toast');
-            toast.style.display = 'block';
+            // Trigger the bottom centered toast notification
+            const toast = document.getElementById('toastNotification');
+            toast.classList.add('active-state');
 
+            // Reset UI states cleanly after timeout window
             setTimeout(() => {
-                button.innerText = originalText;
-                button.classList.remove('copied');
-                toast.style.display = 'none';
+                buttonElement.innerText = initialLabel;
+                buttonElement.classList.remove('success-state');
+                toast.classList.remove('active-state');
             }, 2000);
         }).catch(err => {
-            console.error('Failed to copy: ', err);
+            console.error('Clipboard execution error: ', err);
         });
     }
 </script>
