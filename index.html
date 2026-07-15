@@ -2,38 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Command Vault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Developer Command Vault</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #1e1e1e; color: #fff; padding: 20px; }
-        .cmd-box { background: #000; padding: 15px; border-radius: 5px; margin-bottom: 10px; display: flex; justify-content: space-between; }
-        button { background: #007acc; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
-        button:hover { background: #005999; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; padding: 30px; max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; color: #fff; margin-bottom: 30px; }
+        .section { background: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #00acc1; }
+        .section.flutter { border-left-color: #02569b; }
+        .section-title { font-size: 1.4rem; font-weight: bold; margin-top: 0; margin-bottom: 15px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .cmd-box { background: #000; padding: 12px 15px; border-radius: 6px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
+        code { font-family: 'Courier New', Courier, monospace; color: #4fc3f7; font-size: 1rem; }
+        button { background: #333; color: #fff; border: 1px solid #555; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; transition: all 0.2s; }
+        button:hover { background: #00acc1; border-color: #00acc1; color: #000; }
+        button.copied { background: #4caf50; border-color: #4caf50; color: #fff; }
     </style>
 </head>
 <body>
 
-    <h1>My Command Vault</h1>
-    <p>Click copy to quickly grab any command.</p>
+    <h1>Developer Command Vault</h1>
 
-    <!-- Example Command 1 -->
-    <div class="cmd-box">
-        <code id="cmd1">ipconfig /all</code>
-        <button onclick="copyCmd('cmd1')">Copy</button>
+    <!-- DART SECTION -->
+    <div class="section dart">
+        <div class="section-title">🎯 Dart Commands</div>
+        
+        <div class="cmd-box">
+            <code id="dart1">dart run bin/main.dart</code>
+            <button onclick="copyCmd('dart1', this)">Copy</button>
+        </div>
+        
+        <div class="cmd-box">
+            <code id="dart2">dart format .</code>
+            <button onclick="copyCmd('dart2', this)">Copy</button>
+        </div>
     </div>
 
-    <!-- Example Command 2 -->
-    <div class="cmd-box">
-        <code id="cmd2">sfc /scannow</code>
-        <button onclick="copyCmd('cmd2')">Copy</button>
+    <!-- FLUTTER SECTION -->
+    <div class="section flutter">
+        <div class="section-title">💙 Flutter Commands</div>
+        
+        <div class="cmd-box">
+            <code id="flut_pwd">pwd</code>
+            <button onclick="copyCmd('flut_pwd', this)">Copy</button>
+        </div>
+
+        <div class="cmd-box">
+            <code id="flut_ls">ls</code>
+            <button onclick="copyCmd('flut_ls', this)">Copy</button>
+        </div>
+
+        <div class="cmd-box">
+            <code id="flut_cd">cd Documents/my_flutter_app</code>
+            <button onclick="copyCmd('flut_cd', this)">Copy</button>
+        </div>
+
+        <div class="cmd-box">
+            <code id="flut_doc">flutter doctor</code>
+            <button onclick="copyCmd('flut_doc', this)">Copy</button>
+        </div>
+
+        <div class="cmd-box">
+            <code id="flut_dev">flutter devices</code>
+            <button onclick="copyCmd('flut_dev', this)">Copy</button>
+        </div>
+        
+        <div class="cmd-box">
+            <code id="flut_run">flutter run</code>
+            <button onclick="copyCmd('flut_run', this)">Copy</button>
+        </div>
     </div>
 
     <script>
-        function copyCmd(id) {
+        function copyCmd(id, btnElement) {
             const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text);
-            alert("Copied: " + text);
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = "Copied!";
+                btnElement.classList.add("copied");
+                
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.classList.remove("copied");
+                }, 1500);
+            });
         }
     </script>
 </body>
 </html>
-
