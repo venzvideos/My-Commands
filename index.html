@@ -62,6 +62,7 @@
     <div id="login-screen">
         <div class="login-box">
             <div class="login-title">🔐 ACCESS RESTRICTED</div>
+            <!-- FIXED VALUE ATTRIBUTE BUG BELOW -->
             <input type="password" id="passkey" placeholder="ENTER ACCESS KEY" onkeypress="handleKeyPress(event)">
             <div class="error-msg" id="error-log"></div>
             <button onclick="checkAccess()">AUTHENTICATE</button>
@@ -170,4 +171,3 @@
                 
                 setTimeout(() => {
                     btnElement.innerText = originalText;
-                    btnElement.classList.remove("copied");
