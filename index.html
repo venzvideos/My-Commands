@@ -14,7 +14,7 @@
             /* High-Intensity Glow Theme Matrix */
             --neon-cyan: #00ffff;
             --neon-purple: #d300ff;
-            --neon-green: #39ff14; /* Swatch color unique for web node runtimes */
+            --neon-green: #39ff14;
             --text-main: #c9d1d9;
             --text-bold: #f0f6fc;
             
@@ -44,7 +44,6 @@
         .container {
             width: 100%;
             max-width: 780px;
-            transition: opacity 0.25s ease, transform 0.25s ease;
         }
 
         header {
@@ -90,7 +89,7 @@
             padding-bottom: 12px;
         }
 
-        /* Interactive Clickable Header Variant for Flutter Card */
+        /* Clickable Header styles */
         .clickable-header {
             cursor: pointer;
             display: flex;
@@ -189,7 +188,7 @@
             text-shadow: 0 0 4px #ffffff;
         }
 
-        /* Dedicated Offline Description Overlay View Panel */
+        /* Offline Description Info Panels */
         .description-panel {
             display: none;
             width: 100%;
@@ -199,7 +198,6 @@
             border-radius: 14px;
             padding: 32px;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-            transition: opacity 0.25s ease;
         }
 
         .panel-back-btn {
@@ -285,7 +283,7 @@
 </head>
 <body>
 
-<!-- VIEW CONTAINER 1: Main Framework Listings Grid -->
+<!-- MAIN GRID LISTVIEW -->
 <div id="mainDashboardView" class="container">
     <header>
         <div class="author-tag">Created by Vince Amigo</div>
@@ -303,10 +301,17 @@
 
     <!-- [SECTION: FLUTTER] -->
     <div class="section-card">
-        <div class="section-header clickable-header" onclick="openDescriptionPanel()">
+        <div class="section-header clickable-header" onclick="openPanel('flutterInfoPanel')">
             <span>FLUTTER</span>
             <span class="info-hint-badge">View Info</span>
         </div>
         <div class="cmd-container-box">
             <div class="cmd-string">cd C:\Users\user\Documents\flutter_file\vince_proj</div>
             <button class="action-copy-btn" onclick="executeCopy(this, 'cd C:\\Users\\user\\Documents\\flutter_file\\vince_proj')">Copy</button>
+        </div>
+        <div class="cmd-container-box">
+            <div class="cmd-string">flutter run</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'flutter run')">Copy</button>
+        </div>
+    </div>
+
