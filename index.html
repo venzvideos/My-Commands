@@ -120,8 +120,8 @@
             type="password" 
             id="passkey" 
             class="input-field" 
-            placeholder="••••••" 
-            maxlength="6"
+            placeholder="•••" 
+            maxlength="3"
             onkeypress="handleKeyPress(event)"
         >
         
@@ -137,8 +137,8 @@
 
     <!-- JavaScript Interactive Authentication Layer -->
     <script>
-        // Set your desired 6-character system passcode here
-        const CORRECT_PASSKEY = "matrix";
+        // Updated system password
+        const CORRECT_PASSKEY = "123";
 
         // Listen for the "Enter" keyboard button mapping action
         function handleKeyPress(event) {
