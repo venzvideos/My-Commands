@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Command Vault</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1e1e1e; color: #fff; padding: 20px; }
+        .cmd-box { background: #000; padding: 15px; border-radius: 5px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        button { background: #007acc; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+        button:hover { background: #005999; }
+    </style>
+</head>
+<body>
+
+    <h1>My Command Vault</h1>
+    <p>Click copy to quickly grab any command.</p>
+
+    <!-- Example Command 1 -->
+    <div class="cmd-box">
+        <code id="cmd1">ipconfig /all</code>
+        <button onclick="copyCmd('cmd1')">Copy</button>
+    </div>
+
+    <!-- Example Command 2 -->
+    <div class="cmd-box">
+        <code id="cmd2">sfc /scannow</code>
+        <button onclick="copyCmd('cmd2')">Copy</button>
+    </div>
+
+    <script>
+        function copyCmd(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            alert("Copied: " + text);
+        }
+    </script>
+</body>
+</html>
 
