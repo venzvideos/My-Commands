@@ -187,6 +187,45 @@
         text-shadow: 0 0 4px #ffffff;
     }
 
+    .cmd-run-box .cmd-string {
+        color: var(--neon-purple);
+        text-shadow: 0 0 6px rgba(211, 0, 255, 0.3);
+        font-size: 13px;
+    }
+
+    .action-run-btn {
+        background-color: transparent;
+        border: 2px solid var(--neon-purple);
+        color: var(--neon-purple);
+        padding: 8px 18px;
+        font-size: 11px;
+        font-weight: 800;
+        border-radius: 6px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        flex-shrink: 0;
+        transition: all 0.2s ease-in-out;
+        box-shadow:
+            0 0 8px rgba(211, 0, 255, 0.3),
+            inset 0 0 4px rgba(211, 0, 255, 0.2);
+        text-shadow: 0 0 4px rgba(211, 0, 255, 0.4);
+    }
+
+    .action-run-btn:hover {
+        color: #000000;
+        background-color: var(--neon-purple);
+        box-shadow:
+            0 0 15px var(--neon-purple),
+            0 0 30px rgba(211, 0, 255, 0.6),
+            0 0 45px rgba(211, 0, 255, 0.3);
+        transform: translateY(-1px);
+    }
+
+    .action-run-btn:active {
+        transform: translateY(1px);
+    }
+
     /* Offline Description Info Panels */
     .description-panel {
         display: none;
@@ -924,6 +963,10 @@
             <div class="cmd-string">flutter run</div>
             <button class="action-copy-btn" onclick="executeCopy(this, 'flutter run')">Copy</button>
         </div>
+        <div class="cmd-container-box cmd-run-box">
+            <div class="cmd-string">Run in CMD — downloads a .bat that cd's in and launches flutter run</div>
+            <button class="action-run-btn" onclick="downloadFlutterBat()">&#9654; Run</button>
+        </div>
     </div>
 
     <!-- 3. [SECTION: JSX / REACT] -->
@@ -1012,26 +1055,60 @@
 </div>
 
 <!-- TOAST NOTIFICATION -->
-<div id="toastNotification" class="notification-toast">SYSTEM COMMAND PIPED TO CLIPBOARD</div>
+<div id="toastNotification" class="notification-toast"><span id="toastMessage">SYSTEM COMMAND PIPED TO CLIPBOARD</span></div>
 
 <script>
+    function showSystemToast(message, durationMs) {
+        const toast = document.getElementById('toastNotification');
+        const toastMessage = document.getElementById('toastMessage');
+        const displayDuration = durationMs || 1800;
+
+        toastMessage.textContent = message;
+        toast.classList.add('active-state');
+
+        setTimeout(() => {
+            toast.classList.remove('active-state');
+        }, displayDuration);
+    }
+
     function executeCopy(buttonElement, rawText) {
         navigator.clipboard.writeText(rawText).then(() => {
             const initialLabel = buttonElement.innerText;
             buttonElement.innerText = 'Copied';
             buttonElement.classList.add('success-state');
 
-            const toast = document.getElementById('toastNotification');
-            toast.classList.add('active-state');
+            showSystemToast('SYSTEM COMMAND PIPED TO CLIPBOARD');
 
             setTimeout(() => {
                 buttonElement.innerText = initialLabel;
                 buttonElement.classList.remove('success-state');
-                toast.classList.remove('active-state');
             }, 1800);
         }).catch(err => {
             console.error('Clipboard execution error: ', err);
         });
+    }
+
+    function downloadFlutterBat() {
+        const batLines = [
+            '@echo off',
+            'cd /d "C:\\Users\\user\\Documents\\flutter_file\\vince_proj"',
+            'flutter run',
+            'pause'
+        ];
+        const batContent = batLines.join('\r\n');
+
+        const blob = new Blob([batContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'run-flutter.bat';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        showSystemToast('.BAT DOWNLOADED — DOUBLE-CLICK TO LAUNCH CMD', 2400);
     }
 
     function openPanel(panelId) {
