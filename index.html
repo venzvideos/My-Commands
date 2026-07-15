@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Command Vault</title>
     <style>
-        /* 1. Global Reset & Body Setup */
+        /* Global Setup */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,7 +22,7 @@
             overflow: hidden;
         }
 
-        /* 2. Login Screen Terminal Box */
+        /* Login Screen Frame Box */
         .login-screen {
             background-color: #050505;
             border: 2px solid #00FF00;
@@ -31,23 +31,10 @@
             width: 450px;
             text-align: center;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-            display: block; /* Toggled by JS */
+            display: block; 
         }
-
-        /* 3. Restricted Header & Icon Styling */
-        .lock-icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-        .login-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-        }
-
-        /* 4. Password Input Field */
+        .lock-icon { font-size: 2rem; margin-bottom: 15px; }
+        .login-title { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; margin-bottom: 30px; }
         .input-field {
             width: 100%;
             padding: 12px;
@@ -60,49 +47,26 @@
             text-align: center;
             letter-spacing: 6px;
             outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
             margin-bottom: 15px;
         }
-        .input-field:focus {
-            border-color: #00FF00;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-        }
-
-        /* 5. Error Feedback Message */
-        .error-msg {
-            color: #FF3333;
-            font-size: 0.9rem;
-            height: 20px;
-            margin-bottom: 15px;
-            font-weight: bold;
-            visibility: hidden;
-        }
-
-        /* 6. Authenticate Action Button */
+        .error-msg { color: #FF3333; font-size: 0.9rem; height: 20px; margin-bottom: 15px; font-weight: bold; visibility: hidden; }
         .btn-authenticate {
             background-color: transparent;
             color: #00FF00;
             border: 1px solid #00FF00;
             padding: 10px 25px;
             font-family: inherit;
-            font-size: 1rem;
             font-weight: bold;
-            text-transform: uppercase;
             cursor: pointer;
             border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        .btn-authenticate:hover {
-            background-color: #00FF00;
-            color: #000000;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+            text-transform: uppercase;
         }
 
-        /* 7. The Command Line Dashboard System */
+        /* Interactive Command Terminal System */
         .terminal-dashboard {
-            display: none; /* Hidden until passkey is correct */
-            width: 80vw;
-            height: 80vh;
+            display: none; 
+            width: 85vw;
+            height: 85vh;
             background-color: #050505;
             border: 2px solid #00FF00;
             border-radius: 8px;
@@ -115,70 +79,62 @@
             overflow-y: auto;
             margin-bottom: 15px;
             font-size: 1rem;
-            line-height: 1.4;
-            white-space: pre-wrap;
-            padding-right: 10px;
+            line-height: 1.5;
         }
-        .terminal-input-row {
+
+        /* Logged Outputs & Code Blocks */
+        .log-entry { margin-bottom: 12px; white-space: pre-wrap; }
+        .code-snippet-box {
+            background-color: #111;
+            border: 1px dashed #00FF00;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 5px;
+            margin-bottom: 5px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #222222;
-            padding-top: 10px;
         }
-        .terminal-prompt {
-            color: #00FF00;
-            font-weight: bold;
-            margin-right: 10px;
-            user-select: none;
-        }
-        .cmd-input {
-            flex-grow: 1;
-            background: transparent;
+        .code-text { font-family: inherit; color: #ffffff; white-space: pre-wrap; word-break: break-all; }
+        .btn-copy {
+            background: #00FF00;
+            color: #000;
             border: none;
-            outline: none;
-            color: #00FF00;
+            padding: 4px 10px;
             font-family: inherit;
-            font-size: 1rem;
-        }
-
-        /* Scrollbar styles for dashboard */
-        .terminal-history::-webkit-scrollbar { width: 6px; }
-        .terminal-history::-webkit-scrollbar-thumb { background: #00FF00; border-radius: 3px; }
-
-        .credits {
-            margin-top: 40px;
             font-size: 0.75rem;
-            color: #555555;
-            letter-spacing: 1px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-left: 15px;
+            flex-shrink: 0;
+            transition: background 0.2s;
         }
+        .btn-copy:hover { background: #00cc00; }
+
+        /* Command Line Input Wrapper */
+        .terminal-input-row { display: flex; align-items: center; border-top: 1px solid #222; padding-top: 10px; }
+        .terminal-prompt { color: #00FF00; font-weight: bold; margin-right: 10px; user-select: none; }
+        .cmd-input { flex-grow: 1; background: transparent; border: none; outline: none; color: #00FF00; font-family: inherit; font-size: 1rem; }
+        .credits { margin-top: 40px; font-size: 0.75rem; color: #555; }
     </style>
 </head>
 <body>
 
-    <!-- SECTION 1: Login Screen Box -->
+    <!-- SECTION 1: Login Box UI -->
     <div id="login-box" class="login-screen">
         <div class="lock-icon">🔐</div>
         <div class="login-title">ACCESS RESTRICTED</div>
-        
-        <input 
-            type="password" 
-            id="passkey" 
-            class="input-field" 
-            placeholder="•••" 
-            maxlength="3"
-            onkeypress="handleKeyPress(event)"
-            autocomplete="current-password"
-        >
-        
+        <input type="password" id="passkey" class="input-field" placeholder="•••" maxlength="3" onkeypress="handleKeyPress(event)">
         <div id="error-msg" class="error-msg">INVALID PASSKEY. ACCESS DENIED.</div>
         <button class="btn-authenticate" onclick="validatePasskey()">Authenticate</button>
         <div class="credits">Created by Simon Amadeus</div>
     </div>
 
-    <!-- SECTION 2: Interactive Commands Terminal Dashboard -->
+    <!-- SECTION 2: Command Terminal Area -->
     <div id="dashboard-box" class="terminal-dashboard">
-        <div id="history" class="terminal-history">MATRIX COMMAND VAULT v1.0.0
-Type "help" to see available terminal logs and subroutines.
+        <div id="history" class="terminal-history">MATRIX DEV TERMINAL v1.0.0
+Type "help" to view custom automation commands.
 
 </div>
         <div class="terminal-input-row">
@@ -187,24 +143,15 @@ Type "help" to see available terminal logs and subroutines.
         </div>
     </div>
 
-    <!-- JavaScript Core Processing Layer -->
     <script>
         const CORRECT_PASSKEY = "123";
 
-        // Handle login field entry
-        function handleKeyPress(event) {
-            if (event.key === "Enter") {
-                validatePasskey();
-            }
-        }
+        function handleKeyPress(event) { if (event.key === "Enter") validatePasskey(); }
 
-        // Validate the passkey structure
         function validatePasskey() {
             const inputField = document.getElementById("passkey");
             const errorDisplay = document.getElementById("error-msg");
-            
             if (inputField.value === CORRECT_PASSKEY) {
-                // Hide Auth interface & Unveil Custom Panel
                 document.getElementById("login-box").style.display = "none";
                 document.getElementById("dashboard-box").style.display = "flex";
                 document.getElementById("cmd").focus();
@@ -215,7 +162,7 @@ Type "help" to see available terminal logs and subroutines.
             }
         }
 
-        // Handle command console logic
+        // Central Logic Hook for Terminal Input Commands
         function handleCommandPress(event) {
             if (event.key === "Enter") {
                 const cmdInput = document.getElementById("cmd");
@@ -225,28 +172,72 @@ Type "help" to see available terminal logs and subroutines.
 
                 if (rawCommand === "") return;
 
-                // Log user entry to view
-                history.innerText += `simon@vault:~$ ${rawCommand}\n`;
+                // 1. Output the current raw terminal prompt line
+                const promptLine = document.createElement('div');
+                promptLine.className = 'log-entry';
+                promptLine.innerText = `simon@vault:~$ ${rawCommand}`;
+                history.appendChild(promptLine);
 
-                // Custom Command Processing Matrix
+                // 2. Custom Command Processing Router
                 if (command === "help") {
-                    history.innerText += `Available Subroutines:\n - help    : View command listings\n - status  : Inspect mainframe system levels\n - clear   : Clean screen history matrix\n - system  : Output author asset verification tags\n\n`;
-                } else if (command === "status") {
-                    history.innerText += `SYSTEM LEVEL: SECURE\nFirewall: ACTIVE\nVault Decryption status: 100%\n\n`;
-                } else if (command === "system") {
-                    history.innerText += `System Core Core: Simon Amadeus Architecture\nEngine Interface Build: HTML5 / CSS3 / ES6 Engine\n\n`;
-                } else if (command === "clear") {
-                    history.innerText = "";
-                } else {
-                    history.innerText += `Error: Unknown system routing command "${rawCommand}". Type "help" for a list of system hooks.\n\n`;
+                    appendOutputText(history, `Available Commands:\n - dart-run : Print copyable directory setup and Dart run scripts.\n - clear    : Flush the screen memory layout.\n`);
+                } 
+                else if (command === "dart-run") {
+                    appendOutputText(history, `Preparing repository targets... Built command chains successfully:`);
+                    
+                    // Create an interactive code snippet card block with a separate unique Copy feature!
+                    appendCodeBox(history, `cd my_project && dart run bin/main.dart`);
+                } 
+                else if (command === "clear") {
+                    history.innerHTML = "";
+                } 
+                else {
+                    appendOutputText(history, `Error: Unknown system routing command "${rawCommand}". Type "help" for a list of system hooks.`);
                 }
 
-                // Autoscroll terminal wrapper to base layout anchor
+                // Auto Scroll Screen Frame Anchor State
                 cmdInput.value = "";
                 history.scrollTop = history.scrollHeight;
             }
         }
-    </script>
 
+        // Helper: Inject plain text response blocks into logs
+        function appendOutputText(parent, text) {
+            const el = document.createElement('div');
+            el.className = 'log-entry';
+            el.innerText = text;
+            parent.appendChild(el);
+        }
+
+        // Helper: Build a specialized script component structure with clipboard functions
+        function appendCodeBox(parent, codeString) {
+            const box = document.createElement('div');
+            box.className = 'code-snippet-box';
+
+            const txt = document.createElement('span');
+            txt.className = 'code-text';
+            txt.innerText = codeString;
+
+            const btn = document.createElement('button');
+            btn.className = 'btn-copy';
+            btn.innerText = 'Copy';
+            
+            // Clipboard interface interaction hook
+            btn.onclick = function() {
+                navigator.clipboard.writeText(codeString).then(() => {
+                    btn.innerText = 'Copied!';
+                    btn.style.background = '#ffffff';
+                    setTimeout(() => {
+                        btn.innerText = 'Copy';
+                        btn.style.background = '#00FF00';
+                    }, 1500);
+                });
+            };
+
+            box.appendChild(txt);
+            box.appendChild(btn);
+            parent.appendChild(box);
+        }
+    </script>
 </body>
 </html>
