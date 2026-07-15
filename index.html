@@ -5,170 +5,172 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Command Vault</title>
     <style>
-        body { font-family: 'Courier New', Courier, monospace; background-color: #000; color: #00ff00; padding: 30px; max-width: 800px; margin: 0 auto; position: relative; }
-        canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
-        
-        /* Login Screen Overlay Style */
-        #login-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000000; z-index: 999; display: flex; justify-content: center; align-items: center; }
-        .login-box { background: #000000; border: 2px solid #00ff00; border-radius: 12px; padding: 40px; text-align: center; box-shadow: 0 0 25px rgba(0, 255, 0, 0.4); max-width: 400px; width: 90%; }
-        .login-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 25px; color: #00ff00; text-shadow: 0 0 8px #00ff00; text-transform: uppercase; letter-spacing: 2px; }
-        .login-box input { background: #050505; border: 1px solid #005500; color: #00ff00; padding: 12px; font-family: inherit; font-size: 1rem; width: 80%; text-align: center; border-radius: 6px; outline: none; margin-bottom: 20px; transition: border 0.3s; }
-        .login-box input:focus { border-color: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); }
-        .error-msg { color: #ff3333; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; min-height: 20px; text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
+        /* 1. Global Reset & Body Setup */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000000;
+            color: #00FF00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-        /* Main App Interface Framework Wrapper */
-        #app-wrapper { display: none; }
+        /* 2. Login Screen Terminal Box */
+        .login-screen {
+            background-color: #050505;
+            border: 2px solid #00FF00;
+            border-radius: 10px;
+            padding: 40px;
+            width: 450px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
 
-        /* Gateway Intro Selection Page Box Setup */
-        #intro-hub { display: block; text-align: center; margin-top: 20px; }
-        .hub-options { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
-        .hub-btn { background: #000000; color: #00ff00; border: 2px solid #00ff00; padding: 20px; font-size: 1.2rem; font-weight: bold; border-radius: 12px; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); text-transform: uppercase; letter-spacing: 2px; }
-        .hub-btn:hover { background: #00ff00; color: #000000; box-shadow: 0 0 25px #00ff00; transform: translateY(-3px); }
+        /* 3. Restricted Header & Icon Styling */
+        .lock-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
 
-        /* Individual Code Segment Layout Areas */
-        #dart-vault { display: none; }
-        #flutter-vault { display: none; }
+        /* 4. Password Input Field */
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            background-color: #101010;
+            border: 1px solid #333333;
+            border-radius: 5px;
+            color: #00FF00;
+            font-family: inherit;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 6px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 15px;
+        }
+        .input-field:focus {
+            border-color: #00FF00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
 
-        /* Header Container Box */
-        .header-box { background: #000000; padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); text-align: center; position: relative; }
-        .credits { color: #ffffff; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; margin-bottom: 10px; text-shadow: 0 0 5px #00ff00; text-transform: uppercase; }
-        h1 { color: #00ff00; text-shadow: 0 0 15px #00ff00; margin: 0; text-transform: uppercase; letter-spacing: 3px; font-size: 2.2rem; }
-        
-        /* Main Container Boxes - Dark & Aesthetic */
-        .section { background: #000000; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 2px solid #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); }
-        .section-title { font-size: 1.4rem; font-weight: bold; margin-top: 0; margin-bottom: 20px; color: #fff; text-shadow: 0 0 5px #00ff00; display: flex; align-items: center; gap: 10px; }
-        
-        /* Command Rows - Pure Jet Black */
-        .cmd-box { background: #050505; padding: 15px 20px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #003300; transition: border 0.3s ease; }
-        .cmd-box:hover { border-color: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.1); }
-        
-        code { color: #33ff33; font-size: 1rem; font-weight: bold; text-shadow: 0 0 2px rgba(0, 255, 0, 0.5); }
-        
-        /* Aesthetic Action Buttons */
-        button { background: #000000; color: #00ff00; border: 1px solid #00ff00; padding: 8px 16px; cursor: pointer; border-radius: 6px; font-family: inherit; font-size: 0.85rem; font-weight: bold; transition: all 0.2s; box-shadow: 0 0 5px rgba(0, 255, 0, 0.2); }
-        button:hover { background: #00ff00; color: #000; box-shadow: 0 0 12px #00ff00; transform: scale(1.03); }
-        button.copied { background: #ffffff; border-color: #ffffff; color: #000000; box-shadow: 0 0 15px #ffffff; }
+        /* 5. Error Feedback Message */
+        .error-msg {
+            color: #FF3333;
+            font-size: 0.9rem;
+            height: 20px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            visibility: hidden; /* Hidden by default, toggled via JS */
+        }
 
-        /* Dedicated System Controls Routing Panel Button */
-        .back-nav-btn { background: #000000; color: #ffffff; border: 1px solid #ffffff; margin-bottom: 20px; width: 100%; padding: 12px; font-size: 1rem; border-radius: 8px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
-        .back-nav-btn:hover { background: #ffffff; color: #000000; box-shadow: 0 0 15px #ffffff; }
+        /* 6. Authenticate Action Button */
+        .btn-authenticate {
+            background-color: transparent;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+            padding: 10px 25px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn-authenticate:hover {
+            background-color: #00FF00;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+        }
+
+        /* 7. Bottom Footnote Layout */
+        .credits {
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: #555555;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
 
-    <canvas id="matrix"></canvas>
-
-    <!-- SECURITY GATEWAY -->
-    <div id="login-screen">
-        <div class="login-box">
-            <div class="login-title">🔐 ACCESS RESTRICTED</div>
-            <!-- FIXED VALUE ATTRIBUTE BUG BELOW -->
-            <input type="password" id="passkey" placeholder="ENTER ACCESS KEY" onkeypress="handleKeyPress(event)">
-            <div class="error-msg" id="error-log"></div>
-            <button onclick="checkAccess()">AUTHENTICATE</button>
-        </div>
-    </div>
-
-    <!-- MAIN INTERFACE SYSTEM WRAPPER -->
-    <div id="app-wrapper">
+    <!-- Main Interface Terminal Screen Container -->
+    <div class="login-screen">
         
-        <!-- HEADER LAYOUT CONTAINER PANEL -->
-        <div class="header-box">
-            <div class="credits">Created by Vince Amigo</div>
-            <h1>System Command Vault</h1>
-        </div>
-
-        <!-- STAGE 1: SYSTEM ENVIRONMENT INTRO ROUTER SELECTION HUB -->
-        <div id="intro-hub">
-            <div class="section-title" style="justify-content: center; font-size: 1.6rem;">⚡ SELECT MAIN PIPELINE ENVIRONMENT</div>
-            <div class="hub-options">
-                <button class="hub-btn" onclick="openVault('dart')">🎯 Enter Dart Vault</button>
-                <button class="hub-btn" onclick="openVault('flutter')">💙 Enter Flutter Vault</button>
-            </div>
-        </div>
-
-        <!-- STAGE 2: TARGET ARCHIVE DOMAIN DATA DISPLAY BLOCKS -->
-        <!-- DART PIPELINE TERMINAL ARTIFACT SECTION -->
-        <div id="dart-vault">
-            <button class="back-nav-btn" onclick="returnToHub()">⬅ RETURN TO TERMINAL SELECTION PIPELINE</button>
-            <div class="section">
-                <div class="section-title">🎯 [SECTION: DART]</div>
-                <div class="cmd-box">
-                    <code id="dart1">dart run bin/main.dart</code>
-                    <button onclick="copyCmd('dart1', this)">COPY</button>
-                </div>
-                <div class="cmd-box">
-                    <code id="dart2">dart format .</code>
-                    <button onclick="copyCmd('dart2', this)">COPY</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- FLUTTER PIPELINE RUNTIME ENVIRONMENT ARTIFACT SECTION -->
-        <div id="flutter-vault">
-            <button class="back-nav-btn" onclick="returnToHub()">⬅ RETURN TO TERMINAL SELECTION PIPELINE</button>
-            <div class="section">
-                <div class="section-title">💙 [SECTION: FLUTTER]</div>
-                <div class="cmd-box">
-                    <code id="flut_cd">cd C:\Users\user\Documents\flutter_file\vince_proj</code>
-                    <button onclick="copyCmd('flut_cd', this)">COPY</button>
-                </div>
-                <div class="cmd-box">
-                    <code id="flut_run">flutter run</code>
-                    <button onclick="copyCmd('flut_run', this)">COPY</button>
-                </div>
-            </div>
-        </div>
-
+        <!-- Security Header Information -->
+        <div class="lock-icon">🔐</div>
+        <div class="login-title">ACCESS RESTRICTED</div>
+        
+        <!-- Interactive Passkey Entry Components -->
+        <input 
+            type="password" 
+            id="passkey" 
+            class="input-field" 
+            placeholder="••••••" 
+            maxlength="6"
+            onkeypress="handleKeyPress(event)"
+        >
+        
+        <!-- Live System Validation Warnings -->
+        <div id="error-msg" class="error-msg">INVALID PASSKEY. ACCESS DENIED.</div>
+        
+        <!-- Manual Submission Interface Button -->
+        <button class="btn-authenticate" onclick="validatePasskey()">Authenticate</button>
+        
+        <!-- Author Asset Sign-off Tag -->
+        <div class="credits">Created by Simon Amadeus</div>
     </div>
 
+    <!-- JavaScript Interactive Authentication Layer -->
     <script>
-        // Authentication Routing Engine Logic
-        function checkAccess() {
-            const input = document.getElementById("passkey").value;
-            const correctPassword = "vince123";
-            
-            if (input === correctPassword) {
-                document.getElementById("login-screen").style.display = "none";
-                document.getElementById("app-wrapper").style.display = "block";
-            } else {
-                const errorField = document.getElementById("error-log");
-                errorField.innerText = "ACCESS DENIED: INVALID KEY";
-                document.getElementById("passkey").value = "";
-                setTimeout(() => { errorField.innerText = ""; }, 3000);
-            }
-        }
+        // Set your desired 6-character system passcode here
+        const CORRECT_PASSKEY = "matrix";
 
+        // Listen for the "Enter" keyboard button mapping action
         function handleKeyPress(event) {
             if (event.key === "Enter") {
-                checkAccess();
+                validatePasskey();
             }
         }
 
-        // Vault Display Core Navigation Router Controller Engine
-        function openVault(vaultType) {
-            document.getElementById("intro-hub").style.display = "none";
-            if (vaultType === 'dart') {
-                document.getElementById("dart-vault").style.display = "block";
-            } else if (vaultType === 'flutter') {
-                document.getElementById("flutter-vault").style.display = "block";
-            }
-        }
+        // Central processing engine for passkey string inspection
+        function validatePasskey() {
+            const inputField = document.getElementById("passkey");
+            const errorDisplay = document.getElementById("error-msg");
+            
+            // Extract the user value string
+            const userInput = inputField.value;
 
-        function returnToHub() {
-            document.getElementById("dart-vault").style.display = "none";
-            document.getElementById("flutter-vault").style.display = "none";
-            document.getElementById("intro-hub").style.display = "block";
-        }
-
-        // Copy Automation Storage Processing Command Engine Routine
-        function copyCmd(id, btnElement) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = btnElement.innerText;
-                btnElement.innerText = "COPIED";
-                btnElement.classList.add("copied");
+            if (userInput === CORRECT_PASSKEY) {
+                // SUCCESS LOGIC PATHWAY
+                errorDisplay.style.visibility = "hidden";
+                alert("ACCESS GRANTED. Opening the Matrix Command Vault...");
                 
-                setTimeout(() => {
-                    btnElement.innerText = originalText;
-                    btnElement.classList.remove("copied");}, 1500);});}// Matrix Digital Rain Dynamic Animation Graphics Background Engine Canvas Frame Loopconst canvas = document.getElementById('matrix');const ctx = canvas.getContext('2d');function resizeCanvas() {canvas.width = window.innerWidth;canvas.height = window.innerHeight;}resizeCanvas();window.addEventListener('resize', resizeCanvas);const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789カタカナツールシステム';const alphabet = letters.split('');const fontSize = 14;const columns = canvas.width / fontSize;const rainDrops = [];for (let x = 0; x < columns; x++) {rainDrops[x] = 1;}function drawMatrix() {ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';ctx.fillRect(0, 0, canvas.width, canvas.height);ctx.fillStyle = '#0F0';ctx.font = fontSize + 'px monospace';for (let i = 0; i < rainDrops.length; i++) {const text = alphabet[Math.floor(Math.random() * alphabet.length)];ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {rainDrops[i] = 0;}rainDrops[i]++;}}setInterval(drawMatrix, 30);
+                // Optional Project Destination: Place redirection target here if required
+                // window.location.href = "vault-dashboard.html";
+                
+            } else {
+                // FAILURE LOGIC PATHWAY
+                errorDisplay.style.visibility = "visible";
+                inputField.value = ""; // Empty string sequence input clear
+                inputField.focus();    // Reset interface typing anchor state
+            }
+        }
+    </script>
+
+</body>
+</html>
