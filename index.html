@@ -3,80 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Developer Command Vault</title>
+    <title>Matrix Command Vault</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; padding: 30px; max-width: 800px; margin: 0 auto; }
-        h1 { text-align: center; color: #fff; margin-bottom: 30px; }
-        .section { background: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #00acc1; }
-        .section.flutter { border-left-color: #02569b; }
-        .section-title { font-size: 1.4rem; font-weight: bold; margin-top: 0; margin-bottom: 15px; color: #fff; display: flex; align-items: center; gap: 10px; }
-        .cmd-box { background: #000; padding: 12px 15px; border-radius: 6px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
-        code { font-family: 'Courier New', Courier, monospace; color: #4fc3f7; font-size: 1rem; }
-        button { background: #333; color: #fff; border: 1px solid #555; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; transition: all 0.2s; }
-        button:hover { background: #00acc1; border-color: #00acc1; color: #000; }
-        button.copied { background: #4caf50; border-color: #4caf50; color: #fff; }
+        body { font-family: 'Courier New', Courier, monospace; background-color: #000; color: #00ff00; padding: 30px; max-width: 800px; margin: 0 auto; position: relative; }
+        canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        h1 { text-align: center; color: #00ff00; text-shadow: 0 0 10px #00ff00; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .section { background: rgba(0, 5, 0, 0.85); padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #00ff00; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
+        .section-title { font-size: 1.4rem; font-weight: bold; margin-top: 0; margin-bottom: 15px; color: #fff; text-shadow: 0 0 5px #00ff00; display: flex; align-items: center; gap: 10px; }
+        .cmd-box { background: rgba(0, 0, 0, 0.9); padding: 12px 15px; border-radius: 6px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #005500; }
+        code { color: #33ff33; font-size: 1rem; font-weight: bold; text-shadow: 0 0 2px rgba(0, 255, 0, 0.5); }
+        button { background: #002200; color: #00ff00; border: 1px solid #00ff00; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-family: inherit; font-size: 0.85rem; font-weight: bold; transition: all 0.2s; box-shadow: 0 0 5px rgba(0, 255, 0, 0.3); }
+        button:hover { background: #00ff00; color: #000; box-shadow: 0 0 10px #00ff00; }
+        button.copied { background: #ffffff; border-color: #ffffff; color: #000000; box-shadow: 0 0 10px #ffffff; }
     </style>
 </head>
 <body>
 
-    <h1>Developer Command Vault</h1>
+    <canvas id="matrix"></canvas>
+
+    <h1>System Command Vault</h1>
 
     <!-- DART SECTION -->
-    <div class="section dart">
-        <div class="section-title">🎯 Dart Commands</div>
+    <div class="section">
+        <div class="section-title">🎯 [SECTION: DART]</div>
         
         <div class="cmd-box">
             <code id="dart1">dart run bin/main.dart</code>
-            <button onclick="copyCmd('dart1', this)">Copy</button>
+            <button onclick="copyCmd('dart1', this)">COPY</button>
         </div>
         
         <div class="cmd-box">
             <code id="dart2">dart format .</code>
-            <button onclick="copyCmd('dart2', this)">Copy</button>
+            <button onclick="copyCmd('dart2', this)">COPY</button>
         </div>
     </div>
 
     <!-- FLUTTER SECTION -->
-    <div class="section flutter">
-        <div class="section-title">💙 Flutter Commands</div>
+    <div class="section">
+        <div class="section-title">💙 [SECTION: FLUTTER]</div>
         
         <div class="cmd-box">
             <code id="flut_pwd">pwd</code>
-            <button onclick="copyCmd('flut_pwd', this)">Copy</button>
+            <button onclick="copyCmd('flut_pwd', this)">COPY</button>
         </div>
 
         <div class="cmd-box">
             <code id="flut_ls">ls</code>
-            <button onclick="copyCmd('flut_ls', this)">Copy</button>
+            <button onclick="copyCmd('flut_ls', this)">COPY</button>
         </div>
 
         <div class="cmd-box">
             <code id="flut_cd">cd Documents/my_flutter_app</code>
-            <button onclick="copyCmd('flut_cd', this)">Copy</button>
+            <button onclick="copyCmd('flut_cd', this)">COPY</button>
         </div>
 
         <div class="cmd-box">
             <code id="flut_doc">flutter doctor</code>
-            <button onclick="copyCmd('flut_doc', this)">Copy</button>
+            <button onclick="copyCmd('flut_doc', this)">COPY</button>
         </div>
 
         <div class="cmd-box">
             <code id="flut_dev">flutter devices</code>
-            <button onclick="copyCmd('flut_dev', this)">Copy</button>
+            <button onclick="copyCmd('flut_dev', this)">COPY</button>
         </div>
         
         <div class="cmd-box">
             <code id="flut_run">flutter run</code>
-            <button onclick="copyCmd('flut_run', this)">Copy</button>
+            <button onclick="copyCmd('flut_run', this)">COPY</button>
         </div>
     </div>
 
     <script>
+        // Copy Engine
         function copyCmd(id, btnElement) {
             const text = document.getElementById(id).innerText;
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = btnElement.innerText;
-                btnElement.innerText = "Copied!";
+                btnElement.innerText = "COPIED";
                 btnElement.classList.add("copied");
                 
                 setTimeout(() => {
@@ -85,6 +88,48 @@
                 }, 1500);
             });
         }
+
+        // Matrix Digital Rain Background Engine
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789カタカナツールシステム';
+        const alphabet = letters.split('');
+
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 30);
     </script>
 </body>
 </html>
