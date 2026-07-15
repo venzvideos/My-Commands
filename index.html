@@ -1,296 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Command Vault</title>
-    <style>
-        :root {
-            --bg-dark: #06090e;
-            --panel-bg: #0d1117;
-            --box-bg: #161b22;
-            --border-color: #21262d;
-            
-            /* High-Intensity Glow Theme Matrix */
-            --neon-cyan: #00ffff;
-            --neon-purple: #d300ff;
-            --neon-green: #39ff14;
-            --text-main: #c9d1d9;
-            --text-bold: #f0f6fc;
-            
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Command Vault</title>
+<style>
+    :root {
+        --bg-dark: #06090e;
+        --panel-bg: #0d1117;
+        --box-bg: #161b22;
+        --border-color: #21262d;
 
-        * {
-            box-sizing: border-box;
-        }
+        /* High-Intensity Glow Theme Matrix */
+        --neon-cyan: #00ffff;
+        --neon-purple: #d300ff;
+        --text-main: #c9d1d9;
+        --text-bold: #f0f6fc;
 
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(at 10% 10%, rgba(0, 255, 255, 0.05) 0px, transparent 40%),
-                radial-gradient(at 90% 90%, rgba(211, 0, 255, 0.05) 0px, transparent 40%);
-            color: var(--text-main);
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+        --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 780px;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    body {
+        font-family: var(--font-sans);
+        background-color: var(--bg-dark);
+        background-image:
+            radial-gradient(at 10% 10%, rgba(0, 255, 255, 0.05) 0px, transparent 40%),
+            radial-gradient(at 90% 90%, rgba(211, 0, 255, 0.05) 0px, transparent 40%);
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
 
-        .author-tag {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--neon-purple);
-            margin-bottom: 8px;
-            font-weight: 700;
-            text-shadow: 0 0 10px var(--neon-purple), 0 0 20px rgba(211, 0, 255, 0.5);
-        }
+    .container {
+        width: 100%;
+        max-width: 780px;
+    }
 
-        h1 {
-            font-size: 32px;
-            font-weight: 800;
-            margin: 0;
-            color: var(--text-bold);
-            letter-spacing: -0.5px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        }
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
 
-        .section-card {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        }
+    .author-tag {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--neon-purple);
+        margin-bottom: 8px;
+        font-weight: 700;
+        text-shadow: 0 0 10px var(--neon-purple), 0 0 20px rgba(211, 0, 255, 0.5);
+    }
 
-        .section-header {
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            color: var(--text-bold);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-        }
+    h1 {
+        font-size: 32px;
+        font-weight: 800;
+        margin: 0;
+        color: var(--text-bold);
+        letter-spacing: -0.5px;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
 
-        /* Clickable Header styles */
-        .clickable-header {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: color 0.2s ease;
-        }
-        .clickable-header:hover {
-            color: var(--neon-cyan);
-            text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
-        }
-        .info-hint-badge {
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--neon-purple);
-            border: 1px solid var(--neon-purple);
-            padding: 2px 8px;
-            border-radius: 4px;
-            box-shadow: 0 0 6px rgba(211, 0, 255, 0.2);
-        }
+    .section-card {
+        background-color: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 24px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
 
-        .cmd-container-box {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: var(--box-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin-bottom: 14px;
-            gap: 20px;
-            transition: all 0.25s ease;
-        }
+    .section-header {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        color: var(--text-bold);
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 12px;
+    }
 
-        .cmd-container-box:hover {
-            border-color: rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.05);
-        }
+    /* Clickable Header for Info Panels */
+    .clickable-header {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: color 0.2s ease;
+    }
+    .clickable-header:hover {
+        color: var(--neon-cyan);
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+    }
+    .info-hint-badge {
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--neon-purple);
+        border: 1px solid var(--neon-purple);
+        padding: 2px 8px;
+        border-radius: 4px;
+        box-shadow: 0 0 6px rgba(211, 0, 255, 0.2);
+    }
 
-        .cmd-container-box:last-child {
-            margin-bottom: 0;
-        }
+    .cmd-container-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--box-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin-bottom: 14px;
+        gap: 20px;
+        transition: all 0.25s ease;
+    }
 
-        .cmd-string {
-            font-family: var(--font-mono);
-            font-size: 14px;
-            color: var(--neon-cyan);
-            white-space: pre-wrap;
-            word-break: break-all;
-            text-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
-        }
+    .cmd-container-box:hover {
+        border-color: rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.05);
+    }
 
-        /* INTENSE NEON GLOWING BUTTONS */
-        .action-copy-btn {
-            background-color: transparent;
-            border: 2px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 8px 18px;
-            font-size: 11px;
-            font-weight: 800;
-            border-radius: 6px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            flex-shrink: 0;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 
-                0 0 8px rgba(0, 255, 255, 0.3),
-                inset 0 0 4px rgba(0, 255, 255, 0.2);
-            text-shadow: 0 0 4px rgba(0, 255, 255, 0.4);
-        }
+    .cmd-container-box:last-child {
+        margin-bottom: 0;
+    }
 
-        .action-copy-btn:hover {
-            color: #000000;
-            background-color: var(--neon-cyan);
-            box-shadow: 
-                0 0 15px var(--neon-cyan),
-                0 0 30px rgba(0, 255, 255, 0.6),
-                0 0 45px rgba(0, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
+    .cmd-string {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        color: var(--neon-cyan);
+        white-space: pre-wrap;
+        word-break: break-all;
+        text-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
+    }
 
-        .action-copy-btn:active {
-            transform: translateY(1px);
-        }
+    /* INTENSE NEON GLOWING BUTTONS */
+    .action-copy-btn {
+        background-color: transparent;
+        border: 2px solid var(--neon-cyan);
+        color: var(--neon-cyan);
+        padding: 8px 18px;
+        font-size: 11px;
+        font-weight: 800;
+        border-radius: 6px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        flex-shrink: 0;
+        transition: all 0.2s ease-in-out;
+        box-shadow:
+            0 0 8px rgba(0, 255, 255, 0.3),
+            inset 0 0 4px rgba(0, 255, 255, 0.2);
+        text-shadow: 0 0 4px rgba(0, 255, 255, 0.4);
+    }
 
-        .action-copy-btn.success-state {
-            background-color: var(--neon-purple);
-            border-color: var(--neon-purple);
-            color: #ffffff;
-            box-shadow: 
-                0 0 15px var(--neon-purple),
-                0 0 30px rgba(211, 0, 255, 0.7);
-            text-shadow: 0 0 4px #ffffff;
-        }
+    .action-copy-btn:hover {
+        color: #000000;
+        background-color: var(--neon-cyan);
+        box-shadow:
+            0 0 15px var(--neon-cyan),
+            0 0 30px rgba(0, 255, 255, 0.6),
+            0 0 45px rgba(0, 255, 255, 0.3);
+        transform: translateY(-1px);
+    }
 
-        /* Offline Description Info Panels */
-        .description-panel {
-            display: none;
-            width: 100%;
-            max-width: 780px;
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 32px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-        }
+    .action-copy-btn:active {
+        transform: translateY(1px);
+    }
 
-        .panel-back-btn {
-            background-color: transparent;
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 8px 16px;
-            font-size: 11px;
-            font-weight: 800;
-            border-radius: 6px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
-        }
+    .action-copy-btn.success-state {
+        background-color: var(--neon-purple);
+        border-color: var(--neon-purple);
+        color: #ffffff;
+        box-shadow:
+            0 0 15px var(--neon-purple),
+            0 0 30px rgba(211, 0, 255, 0.7);
+        text-shadow: 0 0 4px #ffffff;
+    }
 
-        .panel-back-btn:hover {
-            color: #000000;
-            background-color: var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
-        }
+    /* Offline Description Info Panels */
+    .description-panel {
+        display: none;
+        width: 100%;
+        max-width: 780px;
+        background-color: var(--panel-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 32px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
 
-        .info-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--text-bold);
-            margin-top: 0;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-        }
+    .panel-back-btn {
+        background-color: transparent;
+        border: 1px solid var(--neon-cyan);
+        color: var(--neon-cyan);
+        padding: 8px 16px;
+        font-size: 11px;
+        font-weight: 800;
+        border-radius: 6px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 24px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+    }
 
-        .info-body {
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--text-main);
-        }
+    .panel-back-btn:hover {
+        color: #000000;
+        background-color: var(--neon-cyan);
+        box-shadow: 0 0 15px var(--neon-cyan);
+    }
 
-        .info-body p {
-            margin-top: 0;
-            margin-bottom: 16px;
-        }
+    .info-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--text-bold);
+        margin-top: 0;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 12px;
+    }
 
-        .info-highlight {
-            color: var(--neon-cyan);
-            font-family: var(--font-mono);
-            font-weight: bold;
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
-        }
+    .info-body {
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--text-main);
+    }
 
-        .notification-toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background-color: #0b0c10;
-            color: #ffffff;
-            border: 1px solid var(--neon-purple);
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(211, 0, 255, 0.4);
-            opacity: 0;
-            visibility: hidden;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
-            z-index: 1000;
-        }
+    .info-body p {
+        margin-top: 0;
+        margin-bottom: 16px;
+    }
 
-        .notification-toast.active-state {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-    </style>
+    .info-highlight {
+        color: var(--neon-cyan);
+        font-family: var(--font-mono);
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+    }
+
+    .notification-toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background-color: #0b0c10;
+        color: #ffffff;
+        border: 1px solid var(--neon-purple);
+        padding: 12px 28px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        box-shadow: 0 0 20px rgba(211, 0, 255, 0.4);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+        z-index: 1000;
+    }
+
+    .notification-toast.active-state {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+</style>
 </head>
 <body>
 
-<!-- MAIN GRID LISTVIEW -->
+<!-- MAIN GRID LISTVIEW (Ania nagtapok tanan) -->
 <div id="mainDashboardView" class="container">
     <header>
         <div class="author-tag">Created by Vince Amigo</div>
         <h1>Command Accessor</h1>
     </header>
 
-    <!-- [SECTION: DART] -->
+    <!-- 1. [SECTION: DART] -->
     <div class="section-card">
         <div class="section-header">DART</div>
         <div class="cmd-container-box">
@@ -299,7 +298,7 @@
         </div>
     </div>
 
-    <!-- [SECTION: FLUTTER] -->
+    <!-- 2. [SECTION: FLUTTER] -->
     <div class="section-card">
         <div class="section-header clickable-header" onclick="openPanel('flutterInfoPanel')">
             <span>FLUTTER</span>
@@ -315,3 +314,82 @@
         </div>
     </div>
 
+    <!-- 3. [SECTION: JSX / REACT] -->
+    <div class="section-card">
+        <div class="section-header clickable-header" onclick="openPanel('reactInfoPanel')">
+            <span>JSX / REACT</span>
+            <span class="info-hint-badge">View Info</span>
+        </div>
+        <div class="cmd-container-box">
+            <div class="cmd-string">npm start</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'npm start')">Copy</button>
+        </div>
+        <div class="cmd-container-box">
+            <div class="cmd-string">npm run build</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'npm run build')">Copy</button>
+        </div>
+    </div>
+</div>
+
+<!-- FLUTTER INFO PANEL -->
+<div id="flutterInfoPanel" class="description-panel">
+    <button class="panel-back-btn" onclick="closePanel('flutterInfoPanel')">&larr; Back to Vault</button>
+    <h2 class="info-title">What is Flutter &amp; Why Use It?</h2>
+    <div class="info-body">
+        <p>Flutter is Google's open-source UI software development kit. It allows you to build beautiful, natively compiled applications for Mobile (iOS &amp; Android), Web, and Desktop environments using only a single codebase.</p>
+        <p>Instead of writing separate Swift code for Apple and Java/Kotlin code for Android, you write your app UI layer just once using the <span class="info-highlight">Dart</span> programming language.</p>
+        <p>Your current layout contains two critical developer commands:</p>
+        <p>1. <span class="info-highlight">cd [path]</span>: Moves your console window directly into your dedicated workspace folder.</p>
+        <p>2. <span class="info-highlight">flutter run</span>: Starts the compiler, fires up hot-reload, and boots the project live onto an attached device or emulator screen.</p>
+    </div>
+</div>
+
+<!-- REACT / JSX INFO PANEL -->
+<div id="reactInfoPanel" class="description-panel">
+    <button class="panel-back-btn" onclick="closePanel('reactInfoPanel')">&larr; Back to Vault</button>
+    <h2 class="info-title">What is JSX &amp; React?</h2>
+    <div class="info-body">
+        <p>React is a popular open-source JavaScript library developed by Meta (Facebook) used for building interactive User Interfaces, specifically for single-page web applications.</p>
+        <p>JSX (JavaScript XML) is a syntax extension used directly inside React. It allows developers to write structural HTML-like elements inside JavaScript files natively, making components readable and fast to compile.</p>
+        <p>Your workspace controls include:</p>
+        <p>1. <span class="info-highlight">npm start</span>: Fires up your Node package runtime and starts a local web server (usually localhost:3000) for instant programming updates.</p>
+        <p>2. <span class="info-highlight">npm run build</span>: Compresses, cleans, and builds your code assets into high-performance plain files ready to deploy onto a server layout.</p>
+    </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div id="toastNotification" class="notification-toast">SYSTEM COMMAND PIPED TO CLIPBOARD</div>
+
+<script>
+    function executeCopy(buttonElement, rawText) {
+        navigator.clipboard.writeText(rawText).then(() => {
+            const initialLabel = buttonElement.innerText;
+            buttonElement.innerText = 'Copied';
+            buttonElement.classList.add('success-state');
+
+            const toast = document.getElementById('toastNotification');
+            toast.classList.add('active-state');
+
+            setTimeout(() => {
+                buttonElement.innerText = initialLabel;
+                buttonElement.classList.remove('success-state');
+                toast.classList.remove('active-state');
+            }, 1800);
+        }).catch(err => {
+            console.error('Clipboard execution error: ', err);
+        });
+    }
+
+    function openPanel(panelId) {
+        document.getElementById('mainDashboardView').style.display = 'none';
+        document.getElementById(panelId).style.display = 'block';
+    }
+
+    function closePanel(panelId) {
+        document.getElementById(panelId).style.display = 'none';
+        document.getElementById('mainDashboardView').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
