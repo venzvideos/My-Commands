@@ -3,150 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vince Proj - Command Dashboard</title>
+    <title>System Command Vault</title>
     <style>
         :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --border-color: #30363d;
-            --text-color: #c9d1d9;
-            --text-muted: #8b949e;
-            --accent-blue: #58a6ff;
-            --accent-green: #238636;
-            --accent-green-hover: #2ea043;
-            --terminal-bg: #010409;
+            --bg-color: #f8f9fa;
+            --container-bg: #ffffff;
+            --border-color: #e9ecef;
+            --text-primary: #212529;
+            --text-muted: #6c757d;
+            --accent-blue: #0d6efd;
+            --accent-blue-hover: #0b5ed7;
+            --code-bg: #f1f3f5;
+            --code-text: #d63384;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-primary);
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
             display: flex;
             justify-content: center;
         }
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 750px;
         }
 
         header {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-            margin-bottom: 25px;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .author-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 700;
         }
 
         h1 {
-            font-size: 24px;
-            margin: 0 0 8px 0;
-            color: #f0f6fc;
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
         }
 
-        .path-banner {
-            background-color: var(--card-bg);
+        .section-block {
+            background-color: var(--container-bg);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 12px;
-            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-            font-size: 13px;
-            color: var(--accent-blue);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            border-radius: 12px;
+            padding: 24px;
             margin-bottom: 25px;
+            box-shadow: var(--shadow);
         }
 
-        @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 20px;
-        }
-
-        .card h2 {
-            font-size: 16px;
-            margin: 0 0 15px 0;
-            color: #f0f6fc;
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 18px 0;
             display: flex;
             align-items: center;
             gap: 8px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
         }
 
-        .cmd-list {
+        .cmd-row {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            gap: 15px;
         }
 
-        .cmd-item {
-            background-color: var(--terminal-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 10px;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .cmd-item:hover {
-            border-color: var(--accent-blue);
-        }
-
-        .cmd-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            font-weight: 600;
+        .cmd-row:last-child {
+            margin-bottom: 0;
         }
 
         .cmd-text {
-            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Monaco, monospace;
-            font-size: 13px;
-            color: #ff7b72;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 14px;
+            color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .terminal-zone {
-            background-color: var(--terminal-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 15px;
-            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
-            min-height: 120px;
-        }
-
-        .terminal-header {
+        .copy-btn {
+            background-color: var(--container-bg);
+            border: 1px solid #ced4da;
             color: var(--text-muted);
+            padding: 6px 14px;
             font-size: 12px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
         }
 
-        #output {
-            color: #79c0ff;
-            font-size: 13px;
-            margin: 0;
-            white-space: pre-wrap;
+        .copy-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            background-color: rgba(13, 110, 253, 0.04);
         }
 
-        .status-tag {
-            color: #56d364;
-            font-size: 12px;
+        .copy-btn.copied {
+            background-color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+        }
+
+        /* Toast notification style */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #212529;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -154,72 +154,67 @@
 
 <div class="container">
     <header>
-        <h1>Vince Proj Command Center</h1>
-        <div class="path-banner">📍 Target Path: C:\Users\user\Documents\flutter_file\vince_proj</div>
+        <div class="author-tag">Created by Vince Amigo</div>
+        <h1>System Command Vault</h1>
     </header>
 
-    <div class="grid">
-        <!-- Flutter & Dart Section -->
-        <div class="card">
-            <h2>⚡ Flutter & Dart Commands</h2>
-            <div class="cmd-list">
-                <div class="cmd-item" onclick="copyCmd('flutter run')">
-                    <div class="cmd-label">Run Application</div>
-                    <div class="cmd-text">flutter run</div>
-                </div>
-                <div class="cmd-item" onclick="copyCmd('flutter clean && flutter pub get')">
-                    <div class="cmd-label">Reset Dependencies</div>
-                    <div class="cmd-text">flutter clean && flutter pub get</div>
-                </div>
-                <div class="cmd-item" onclick="copyCmd('dart analyze')">
-                    <div class="cmd-label">Code Analysis</div>
-                    <div class="cmd-text">dart analyze</div>
-                </div>
-            </div>
+    <!-- [SECTION: DART] -->
+    <div class="section-block">
+        <div class="section-title">
+            <span>🎯</span> [Section: Dart]
         </div>
-
-        <!-- Git Automation Section -->
-        <div class="card">
-            <h2>📁 GitHub Management</h2>
-            <div class="cmd-list">
-                <div class="cmd-item" onclick="copyCmd('git status')">
-                    <div class="cmd-label">Check Workspace Changes</div>
-                    <div class="cmd-text">git status</div>
-                </div>
-                <div class="cmd-item" onclick="copyCmd('git add . && git commit -m &quot;Update from dashboard&quot; && git push origin main')">
-                    <div class="cmd-label">Quick Commit & Push</div>
-                    <div class="cmd-text">git add . && git commit...</div>
-                </div>
-                <div class="cmd-item" onclick="copyCmd('git remote -v')">
-                    <div class="cmd-label">Verify Remote URL</div>
-                    <div class="cmd-text">git remote -v</div>
-                </div>
-            </div>
+        
+        <div class="cmd-row">
+            <div class="cmd-text">dart run bin/main.dart</div>
+            <button class="copy-btn" onclick="copyCommand(this, 'dart run bin/main.dart')">Copy</button>
+        </div>
+        
+        <div class="cmd-row">
+            <div class="cmd-text">dart format .</div>
+            <button class="copy-btn" onclick="copyCommand(this, 'dart format .')">Copy</button>
         </div>
     </div>
 
-    <!-- Terminal Window Component -->
-    <div class="terminal-zone">
-        <div class="terminal-header">
-            <span>📟 Interactive Clipboard Terminal</span>
-            <span class="status-tag">Ready</span>
+    <!-- [SECTION: FLUTTER] -->
+    <div class="section-block">
+        <div class="section-title">
+            <span>💙</span> [Section: Flutter]
         </div>
-        <p id="output">Click any command card above to instantly copy it to your clipboard for your native CMD terminal.</p>
+        
+        <div class="cmd-row">
+            <div class="cmd-text">cd C:\Users\user\Documents\flutter_file\vince_proj</div>
+            <button class="copy-btn" onclick="copyCommand(this, 'cd C:\\Users\\user\\Documents\\flutter_file\\vince_proj')">Copy</button>
+        </div>
+        
+        <div class="cmd-row">
+            <div class="cmd-text">flutter run</div>
+            <button class="copy-btn" onclick="copyCommand(this, 'flutter run')">Copy</button>
+        </div>
     </div>
 </div>
 
+<!-- Toast element for copy confirmation -->
+<div id="toast" class="toast">Command copied to clipboard!</div>
+
 <script>
-    function copyCmd(text) {
+    function copyCommand(button, text) {
         navigator.clipboard.writeText(text).then(() => {
-            const outputBox = document.getElementById('output');
-            outputBox.style.color = '#56d364';
-            outputBox.innerText = `[Copied to Clipboard]\n> ${text}\n\nPaste this directly into your local command prompt!`;
+            // Visual feedback on the button
+            const originalText = button.innerText;
+            button.innerText = 'Copied';
+            button.classList.add('copied');
             
+            // Show toast notification
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+
             setTimeout(() => {
-                outputBox.style.color = '#79c0ff';
-            }, 3000);
+                button.innerText = originalText;
+                button.classList.remove('copied');
+                toast.style.display = 'none';
+            }, 2000);
         }).catch(err => {
-            document.getElementById('output').innerText = 'Error copying text: ' + err;
+            console.error('Failed to copy: ', err);
         });
     }
 </script>
