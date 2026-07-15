@@ -6,17 +6,17 @@
     <title>System Command Vault</title>
     <style>
         :root {
-            --bg-dark: #080b10;
-            --panel-bg: #11161d;
-            --box-bg: #1a202c;
-            --border-color: #262c36;
+            --bg-dark: #06090e;
+            --panel-bg: #0d1117;
+            --box-bg: #161b22;
+            --border-color: #21262d;
             
-            /* Neon Aesthetic Glow Theme */
-            --neon-blue: #00f0ff;
-            --neon-purple: #bd00ff;
-            --text-main: #adc1d6;
-            --text-bold: #ffffff;
-            --text-muted: #62768c;
+            /* High-Intensity Glow Theme Matrix */
+            --neon-cyan: #00ffff;
+            --neon-purple: #d300ff;
+            --neon-green: #39ff14; /* Swatch color unique for web node runtimes */
+            --text-main: #c9d1d9;
+            --text-bold: #f0f6fc;
             
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
@@ -30,8 +30,8 @@
             font-family: var(--font-sans);
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(at 0% 0%, rgba(0, 240, 255, 0.03) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(189, 0, 255, 0.03) 0px, transparent 50%);
+                radial-gradient(at 10% 10%, rgba(0, 255, 255, 0.05) 0px, transparent 40%),
+                radial-gradient(at 90% 90%, rgba(211, 0, 255, 0.05) 0px, transparent 40%);
             color: var(--text-main);
             margin: 0;
             padding: 40px 20px;
@@ -58,48 +58,35 @@
             color: var(--neon-purple);
             margin-bottom: 8px;
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(189, 0, 255, 0.4);
+            text-shadow: 0 0 10px var(--neon-purple), 0 0 20px rgba(211, 0, 255, 0.5);
         }
 
         h1 {
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 800;
             margin: 0;
             color: var(--text-bold);
             letter-spacing: -0.5px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
         .section-card {
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 26px;
+            border-radius: 14px;
+            padding: 24px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Ambient subtle card highlight */
-        .section-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .section-header {
             font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            margin-bottom: 22px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
             color: var(--text-bold);
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 14px;
+            padding-bottom: 12px;
         }
 
         .cmd-container-box {
@@ -108,17 +95,16 @@
             justify-content: space-between;
             background-color: var(--box-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 16px 22px;
-            margin-bottom: 16px;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 14px;
             gap: 20px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.25s ease;
         }
 
         .cmd-container-box:hover {
-            border-color: rgba(0, 240, 255, 0.3);
-            background-color: #1e2533;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.05);
+            border-color: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.05);
         }
 
         .cmd-container-box:last-child {
@@ -128,66 +114,70 @@
         .cmd-string {
             font-family: var(--font-mono);
             font-size: 14px;
-            color: var(--neon-blue);
+            color: var(--neon-cyan);
             white-space: pre-wrap;
             word-break: break-all;
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
+            text-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
         }
 
-        /* Aesthetic Glowing Button Base */
+        /* INTENSE NEON GLOWING BUTTONS */
         .action-copy-btn {
             background-color: transparent;
-            border: 1px solid var(--neon-blue);
-            color: var(--neon-blue);
-            padding: 9px 18px;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 18px;
             font-size: 11px;
-            font-weight: 700;
-            border-radius: 8px;
+            font-weight: 800;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1), inset 0 0 5px rgba(0, 240, 255, 0.05);
+            transition: all 0.2s ease-in-out;
+            box-shadow: 
+                0 0 8px rgba(0, 255, 255, 0.3),
+                inset 0 0 4px rgba(0, 255, 255, 0.2);
+            text-shadow: 0 0 4px rgba(0, 255, 255, 0.4);
         }
 
-        /* Button Hover Glowing Effect */
         .action-copy-btn:hover {
             color: #000000;
-            background-color: var(--neon-blue);
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+            background-color: var(--neon-cyan);
+            box-shadow: 
+                0 0 15px var(--neon-cyan),
+                0 0 30px rgba(0, 255, 255, 0.6),
+                0 0 45px rgba(0, 255, 255, 0.3);
             transform: translateY(-1px);
         }
 
-        /* Button Active/Click State */
         .action-copy-btn:active {
             transform: translateY(1px);
         }
 
-        /* Success Glowing State (When Copied) */
         .action-copy-btn.success-state {
             background-color: var(--neon-purple);
             border-color: var(--neon-purple);
             color: #ffffff;
-            box-shadow: 0 0 25px rgba(189, 0, 255, 0.8);
+            box-shadow: 
+                0 0 15px var(--neon-purple),
+                0 0 30px rgba(211, 0, 255, 0.7);
+            text-shadow: 0 0 4px #ffffff;
         }
 
-        /* Centered minimal toast popup */
         .notification-toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
-            background-color: #12131a;
+            background-color: #0b0c10;
             color: #ffffff;
             border: 1px solid var(--neon-purple);
             padding: 12px 28px;
             border-radius: 30px;
             font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 25px rgba(189, 0, 255, 0.3);
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(211, 0, 255, 0.4);
             opacity: 0;
             visibility: hidden;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
@@ -230,9 +220,21 @@
             <button class="action-copy-btn" onclick="executeCopy(this, 'flutter run')">Copy</button>
         </div>
     </div>
+
+    <!-- [SECTION: JSX / REACT] -->
+    <div class="section-card">
+        <div class="section-header">[SECTION: JSX / REACT]</div>
+        <div class="cmd-container-box">
+            <div class="cmd-string">npm start</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'npm start')">Copy</button>
+        </div>
+        <div class="cmd-container-box">
+            <div class="cmd-string">npm run build</div>
+            <button class="action-copy-btn" onclick="executeCopy(this, 'npm run build')">Copy</button>
+        </div>
+    </div>
 </div>
 
-<!-- Center-bottom floating notification toast -->
 <div id="toastNotification" class="notification-toast">SYSTEM COMMAND PIPED TO CLIPBOARD</div>
 
 <script>
