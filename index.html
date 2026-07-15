@@ -7,7 +7,8 @@
     <style>
         body { font-family: 'Courier New', Courier, monospace; background-color: #000; color: #00ff00; padding: 30px; max-width: 800px; margin: 0 auto; position: relative; }
         canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
-        h1 { text-align: center; color: #00ff00; text-shadow: 0 0 10px #00ff00; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .credits { text-align: center; color: #00ff00; font-size: 1rem; letter-spacing: 1px; margin-bottom: 5px; opacity: 0.8; text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
+        h1 { text-align: center; color: #00ff00; text-shadow: 0 0 10px #00ff00; margin-top: 0; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
         .section { background: rgba(0, 5, 0, 0.85); padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #00ff00; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
         .section-title { font-size: 1.4rem; font-weight: bold; margin-top: 0; margin-bottom: 15px; color: #fff; text-shadow: 0 0 5px #00ff00; display: flex; align-items: center; gap: 10px; }
         .cmd-box { background: rgba(0, 0, 0, 0.9); padding: 12px 15px; border-radius: 6px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #005500; }
@@ -21,6 +22,7 @@
 
     <canvas id="matrix"></canvas>
 
+    <div class="credits">Created by Vince Amigo</div>
     <h1>System Command Vault</h1>
 
     <!-- DART SECTION -->
